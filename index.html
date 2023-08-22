@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mailgun Email Sender</title>
+</head>
+<body>
+    <h1>Mailgun Email Sender</h1>
+    <form id="emailForm">
+        <label for="to">To:</label>
+        <input type="email" id="to" name="to" required><br>
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" name="subject" required><br>
+        <label for="text">Text:</label>
+        <textarea id="text" name="text" required></textarea><br>
+        <label for="html">HTML:</label>
+        <textarea id="html" name="html" required></textarea><br>
+        <button type="submit">Send Email</button>
+    </form>
+
+    <script>
+        document.getElementById('emailForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(document.getElementById('emailForm'));
+
+            // Send the formData to your server for email sending
+            axios.post('/send-email', Object.fromEntries(formData))
+                .then(response => {
+                    console.log(response.data);
+                    alert('Email request sent to server');
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('An error occurred while sending the email request');
+                });
+        });
+    </script>
+    // Include the axios library for making HTTP requests
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+</body>
+</html>
